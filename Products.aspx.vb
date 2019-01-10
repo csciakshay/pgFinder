@@ -11,12 +11,30 @@ Partial Class Products
         'adp.Fill(dt)
         'DataList1.DataSource = dt
         'DataList1.DataBind()
-        If DropDownList2.SelectedIndex > 0 Then
-            SqlDataSource1.SelectCommand = "select * from PropertyMaster where type='" + DropDownList2.SelectedValue + "'"
-        Else
-            SqlDataSource1.SelectCommand = "select * from PropertyMaster"
-        End If
+        Dim typeCondition, cityCondition, priceCondition As String
+        typeCondition = ""
+        cityCondition = ""
+        priceCondition = ""
 
+        If DropDownList2.SelectedIndex > 0 Then
+            typeCondition = "and type like '" + DropDownList2.SelectedValue + "%' "
+        End If
+        If DropDownList1.SelectedIndex > 0 Then
+            cityCondition = "and city like '" + DropDownList1.SelectedValue + "%' "
+        End If
+        If DropDownList3.SelectedIndex > 0 Then
+            If DropDownList3.SelectedValue = "1000~5000" Then
+                priceCondition = "and price between 1000 and 5000 "
+            End If
+            If DropDownList3.SelectedValue = "5001~10000" Then
+                priceCondition = "and price between 5001 and 10000 "
+            End If
+            If DropDownList3.SelectedValue = "10000 above" Then
+                priceCondition = "and price between 10000 and 9999999 "
+            End If
+        End If
+       
+        SqlDataSource1.SelectCommand = "select * from PropertyMaster WHERE propertysold = 'N' " + cityCondition + typeCondition + priceCondition
 
         SqlDataSource1.DataBind()
         DataList1.DataBind()

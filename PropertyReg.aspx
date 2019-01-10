@@ -77,6 +77,7 @@
                      </div>
                      <div class="col-4 col-12-xsmall">
                           <asp:CheckBox ID="CheckBox1" runat="server" Text ="Price Negotiable"></asp:CheckBox>
+                           <asp:CheckBox ID="CheckBox2" runat="server" Text ="Sold Out"></asp:CheckBox>
                      </div>
                      <div class="col-12">
                      Photoes <asp:FileUpload ID="FileUpload1" runat="server" accept="image/png image/jpeg image/gif"></asp:FileUpload>

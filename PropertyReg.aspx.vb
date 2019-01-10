@@ -26,7 +26,7 @@ Partial Class PropertyReg
     Protected Sub Button2_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button2.Click
         If FileUpload1.HasFile Then
             FileUpload1.SaveAs(Server.MapPath("~/upload/") + FileUpload1.FileName)
-            Session("imagepath") = Server.MapPath("~/upload/") + FileUpload1.FileName
+            Session("imagepath") = "~/upload/" + FileUpload1.FileName
         End If
     End Sub
     Protected Function getPropertyID() As Integer
@@ -69,10 +69,15 @@ Partial Class PropertyReg
             Else
                 CheckBox1.Checked = False
             End If
+            If dt.Rows(0)("propertysold").Equals("Y") Then
+                CheckBox2.Checked = True
+            Else
+                CheckBox2.Checked = False
+            End If
             DropDownList1.SelectedValue = dt.Rows(0)("city").ToString
             DropDownList2.SelectedValue = dt.Rows(0)("type").ToString
             Image1.ImageUrl = dt.Rows(0)("image").ToString
-
+            Session("imagepath") = dt.Rows(0)("image").ToString
         Else
             ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", "Not Found")
         End If
@@ -82,6 +87,24 @@ Partial Class PropertyReg
     End Sub
 
     Protected Sub Button4_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button4.Click
+        con.Open()
+        Dim neg, sold As String
+        Dim price As Decimal
+        price = TextBox6.Text
+        If CheckBox1.Checked Then
+            neg = "Y"
+        Else
+            neg = "N"
+        End If
+        If CheckBox2.Checked Then
+            sold = "Y"
+        Else
+            sold = "N"
+        End If
+        Dim cmd As New SqlCommand("update PropertyMaster set title= '" + TextBox1.Text + "', description= '" + TextBox2.Text + "', address='" + TextBox3.Text + "', size = '" + TextBox4.Text + "', price=" + price.ToString + ", city='" + DropDownList1.SelectedValue.ToString + "', negotiable='" + neg + "', image='" + Session("imagepath").ToString + "', type='" + DropDownList2.SelectedValue.ToString + "' , propertysold='" + sold + "' where id=" + TextBox7.Text + "", con)
+        cmd.ExecuteNonQuery()
+
+        con.Close()
 
     End Sub
 End Class
