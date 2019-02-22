@@ -19,8 +19,8 @@
 			<header id="header">
 				<a class="logo" href="Products.aspx">PG Finder</a>
 				<nav>
-                    <a href="#login">Login</a>
-					<a href="Default2.aspx">Register</a>
+                    <a href="login.aspx">Login</a>
+					<a href="UserReg.aspx">Register</a>
 					<a href="#menu">Menu</a>
 				</nav>
 			</header>
@@ -30,7 +30,7 @@
 				<ul class="links">
 					<li><a href="Products.aspx">Home</a></li>
 					<li><a href="PropertyReg.aspx">Property Register</a></li>
-					<li><a href="Default2.aspx">User Register</a></li>
+					<li><a href="UserReg.aspx">User Register</a></li>
 				</ul>
 			</nav>
     <form id="form1" runat="server">

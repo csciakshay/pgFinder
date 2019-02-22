@@ -79,10 +79,19 @@
                           <asp:CheckBox ID="CheckBox1" runat="server" Text ="Price Negotiable"></asp:CheckBox>
                            <asp:CheckBox ID="CheckBox2" runat="server" Text ="Sold Out"></asp:CheckBox>
                      </div>
+                     <div class="col-4 col-12-xsmall">
+                          <asp:CheckBox ID="CheckBox3" runat="server" Text ="Lifts"></asp:CheckBox>
+                           <asp:CheckBox ID="CheckBox4" runat="server" Text ="Park"></asp:CheckBox>
+                           <asp:CheckBox ID="CheckBox5" runat="server" Text ="Visitor Parking"></asp:CheckBox>
+                           <asp:CheckBox ID="CheckBox6" runat="server" Text ="Inter Com"></asp:CheckBox>
+                           <asp:CheckBox ID="CheckBox7" runat="server" Text ="Water Storage"></asp:CheckBox>
+                           <asp:CheckBox ID="CheckBox8" runat="server" Text ="Security"></asp:CheckBox>
+                           <asp:CheckBox ID="CheckBox9" runat="server" Text ="Fire Aleram"></asp:CheckBox>
+                     </div>
                      <div class="col-12">
-                     Photoes <asp:FileUpload ID="FileUpload1" runat="server" accept="image/png image/jpeg image/gif"></asp:FileUpload>
-                     <asp:Button ID="Button2" runat="server" Text="Upload" class="primary"></asp:Button>
-                        <asp:Image ID="Image1" runat="server"></asp:Image>
+                     Photoes <asp:FileUpload ID="FileUpload1" runat="server" accept="image/png image/jpeg image/gif" AllowMultiple="true"></asp:FileUpload>
+                     <%--<asp:Button ID="Button2" runat="server" Text="Upload" class="primary"></asp:Button>--%>
+                        <asp:Image ID="Image1" runat="server" Width="50" Height="50"></asp:Image>
                      </div>
                     <!-- Break -->
 											<div class="col-12">
