@@ -13,6 +13,12 @@
 					<div class="content">
                      <h3>Property Details</h3>
                     <div class="row gtr-uniform">
+                     <div class="col-10 col-12-medium">
+                        
+                    </div>
+                     <div class="col-2 col-12-medium">
+                        <asp:Button ID="Button1" runat="server" Text="Back" class="primary"></asp:Button>
+                    </div>
                      <div class="col-2 col-12-medium">
                         
                     </div>
@@ -51,6 +57,9 @@
                             CellPadding="3" AutoGenerateRows="False">
                             <EditRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
                             <Fields>
+                            <asp:ImageField DataImageUrlField="image" HeaderText="Photo">
+                                <ControlStyle Height="100px" Width="100px" />
+                                </asp:ImageField>
                                 <asp:BoundField DataField="type" HeaderText="Property Type" />
                                 <asp:BoundField DataField="userid" HeaderText="Added By" />
                                 <asp:BoundField DataField="createDate" HeaderText="Added Date" />
@@ -61,8 +70,7 @@
                                 <asp:BoundField DataField="size" HeaderText="Size" />
                                 <asp:BoundField DataField="price" HeaderText="Price" />
                                 <asp:BoundField DataField="negotiable" HeaderText="Price Negotiat" />
-                                <asp:ImageField DataImageUrlField="image" HeaderText="Photo">
-                                </asp:ImageField>
+                                <asp:BoundField DataField="views" HeaderText="Property Views" />
                             </Fields>
                             <FooterStyle BackColor="White" ForeColor="#000066" />
                             <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />

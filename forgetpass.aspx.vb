@@ -20,6 +20,7 @@ Partial Class forgetpass
             smtpClient.EnableSsl = True
             smtpClient.Send(message)
             MsgBox("Reset link sent on " + TextBox1.Text)
+            Response.Redirect("login.aspx")
         Else
             MsgBox("Email " + TextBox1.Text + " not registered")
 

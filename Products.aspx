@@ -50,7 +50,8 @@
                     <div class="col-12">
 <asp:DataList ID="DataList1" runat="server" CellPadding="4" DataKeyField="id" 
                             DataSourceID="SqlDataSource1" ForeColor="#333333" 
-                            RepeatDirection="Horizontal" BorderColor="Blue" RepeatColumns="4">
+                            RepeatDirection="Horizontal" BorderColor="Blue" RepeatColumns="4" 
+                            GridLines="Both">
     <AlternatingItemStyle BackColor="White" />
     <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
     <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
@@ -94,12 +95,12 @@
         <asp:Label ID="createDateLabel" runat="server" 
              Text='<%# Eval("createDate") %>' />
         <br />
-         image:
+         
         <asp:Image ID="imageLabel" runat="server" 
             ImageUrl ='<%# Eval("image") %>' Width ="100px" Height="100px" />
         <br />
         <asp:LinkButton ID="LinkButton1" href='<%# Eval("id", "PropertyDtl.aspx?ID={0}") %>' runat="server" class="button primary  small">View Detail</asp:LinkButton>
-        <asp:LinkButton ID="LinkButton2" href='<%# Eval("id", "PropertyDtl.aspx?ID={0}") %>' runat="server" class="button small">Contact Detail</asp:LinkButton>
+        <asp:LinkButton ID="LinkButton2" href='<%# Eval("userid", "UserDtl.aspx?ID={0}") %>' runat="server" class="button small">Contact Detail</asp:LinkButton>
          <br />
     </ItemTemplate>
     <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />

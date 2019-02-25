@@ -2,6 +2,7 @@
 Partial Class Products
     Inherits System.Web.UI.Page
     Dim con As New SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings("ApplicationServices").ConnectionString)
+    Dim pg As PagedDataSource = New PagedDataSource()
     Protected Sub Button3_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button3.Click
         con.Open()
         'Dim cmd As New SqlCommand("select * from PropertyMaster where type='" + DropDownList2.SelectedValue + "'", con)
@@ -43,6 +44,13 @@ Partial Class Products
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        
+
+        'pg.DataSource = SqlDataSource1
+        'pg.AllowPaging = True
+        'pg.PageSize = 3
+
+
+        'DataList1.DataSource = pg
+        'DataList1.DataBind()
     End Sub
 End Class
