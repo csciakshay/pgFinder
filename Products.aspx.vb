@@ -39,6 +39,7 @@ Partial Class Products
 
         SqlDataSource1.DataBind()
         DataList1.DataBind()
+
         con.Close()
 
     End Sub

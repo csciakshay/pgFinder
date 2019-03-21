@@ -54,6 +54,11 @@ Partial Class PropertyReg
                         cmd1.CommandText = "insert into PropertyImages values(" + TextBox8.Text + ",'~\upload\" & Path.GetFileName(hpf.FileName) + "')"
                         cmd1.Connection = con
                         cmd1.ExecuteNonQuery()
+                    Else
+
+                        cmd1.CommandText = "insert into PropertyImages values(" + TextBox8.Text + ",'~\upload\noimage.png')"
+                        cmd1.Connection = con
+                        cmd1.ExecuteNonQuery()
                     End If
                 Next i
             Catch ex As Exception

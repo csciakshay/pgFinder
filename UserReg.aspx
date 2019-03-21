@@ -16,12 +16,11 @@
                         
                     </div>
                     <div class="col-4 col-12-medium">
-                      <asp:TextBox ID="TextBox7" runat="server" placeholder="User Id"></asp:TextBox>
+                      <asp:TextBox ID="TextBox7" runat="server" placeholder="User Id" Visible="False"></asp:TextBox>
                        
                     </div>
                     <div class="col-4 col-12-medium">
-                        <asp:Button ID="Button3" runat="server" Text="Search" class="primary"></asp:Button>
-                        <asp:Button ID="Button4" runat="server" Text="Update" class="primary"></asp:Button>
+                        
                     </div>
                     <div class="col-2 col-12-medium">
                         
@@ -90,6 +89,10 @@
 													<li>
                                                     <asp:Button ID="Button1" runat="server" Text="Submit" class="primary"></asp:Button>
                                                     
+                                                    </li>
+                                                    <li>
+                                                        <asp:Button ID="Button3" runat="server" Text="Update" class="primary"></asp:Button>
+                        
                                                     </li>
 													<li><input type="reset" value="Reset" /></li>
 												</ul>

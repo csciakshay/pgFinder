@@ -1,6 +1,15 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MainMaster.master" AutoEventWireup="false" CodeFile="PropertyDtl.aspx.vb" Inherits="PropertyDtl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"
+           type="text/javascript"></script>
+           <meta property="og:url"           content="http://www.pgfinder.com/PGFinder/PropertyDtl.aspx?ID=6" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="PG Finder" />
+  <meta property="og:description"   content="Find your batter PG!" />
+  <meta property="og:image"         content="~/upload/noimage.png" />
+  
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <!-- Heading -->
@@ -51,15 +60,12 @@
                         
                     </div>
                     <div class="col-8 col-12-medium">
-                    <asp:Label ID="Label2" runat="server" Text="Property Details:"></asp:Label>
+                    <asp:Label ID="Label2" runat="server" Text="Property Details:" Font-Bold="True"></asp:Label>
                         <asp:DetailsView ID="DetailsView1" runat="server" Width="492px" Height="50px" 
                             BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" 
                             CellPadding="3" AutoGenerateRows="False">
                             <EditRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
                             <Fields>
-                            <asp:ImageField DataImageUrlField="image" HeaderText="Photo">
-                                <ControlStyle Height="100px" Width="100px" />
-                                </asp:ImageField>
                                 <asp:BoundField DataField="type" HeaderText="Property Type" />
                                 <asp:BoundField DataField="userid" HeaderText="Added By" />
                                 <asp:BoundField DataField="createDate" HeaderText="Added Date" />
@@ -77,9 +83,61 @@
                             <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                             <RowStyle ForeColor="#000066" />
                         </asp:DetailsView>
+                         <div id="fb-root"></div>
+                        <asp:Label ID="Label3" runat="server" Text="Share to others: "></asp:Label>
+                         <script language="javascript" type="text/javascript">
+                             var pid = window.location.search;
+                             pid = pid.replace("?", '');
+                             alert(pid);
+                             $(".twitter-share-button").attr("data-url", "http://www.pgfinder.com/PGFinder/PropertyDtl.aspx?"+pid+");
+                             $(".fb-share-button").attr("data-href", "http://www.pgfinder.com/PGFinder/PropertyDtl.aspx?"+pid+");
+                         </script>
+                          <script>  
+                              (function (d, s, id) {
+                                  var js, fjs = d.getElementsByTagName(s)[0];
+                                  if (d.getElementById(id)) return;
+                                  js = d.createElement(s); js.id = id;
+                                  js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+                                  fjs.parentNode.insertBefore(js, fjs);
+                              } (document, 'script', 'facebook-jssdk'));
+                              
+                              
+                              </script>
+
+                              <!-- Your share button code -->
+                              <div class="fb-share-button" 
+                                data-href="http://www.pgfinder.com/PGFinder/PropertyDtl.aspx?ID=6" 
+                                data-layout="button_count">
+                              </div> 
+                              <%--Twitter share--%>
+                        <a href="https://twitter.com/share" class="twitter-share-button"  data-text="Best sutable PG option for you is: " data-size="large" data-count="none">Tweet</a>
+
+                        <script>    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>
+                        <script>
+                            window.onload = function () {
+                                twttr.events.bind('tweet', function (event) {
+                                    alert("Thanks for sharing on twitter");
+                                });
+
+                                twttr.events.bind('click', function (event) {
+                                    alert("You are going to share in twitter");
+                                });
+                            }
+                            </script>
+                            <%--Linked In Share--%>
+                         <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+                        <script type="IN/Share" data-onsuccess="lnksuccess" data-onerror="error" data-url="http://www.pgfinder.com/PGFinder/PropertyDtl.aspx"></script>
+                         <script>
+                             function lnksuccess(url) {
+                                 alert("url = " + url + "  shared successfully");
+                             }
+                             function lnkerror(url) {
+                                 alert("something goes wrong in url sharing");
+                             }
+                        </script>
                     </div>
                    <div class="col-2 col-12-medium">
-                        
+                       
                     </div>
                      </div>
                     </div>

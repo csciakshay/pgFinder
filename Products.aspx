@@ -60,30 +60,33 @@
          <%--id:
         <asp:Label ID="idLabel" runat="server" Text='<%# Eval("id") %>' />
         <br />--%>
-         type:
+        <asp:Image ID="imageLabel" runat="server" 
+            ImageUrl ='<%# Eval("images") %>' Width ="100px" Height="100px" />
+        <br />
+         Type:
          <asp:Label ID="typeLabel" runat="server" Text='<%# Eval("type") %>' />
         <br />
          Title: <asp:Label ID="titleLabel" runat="server" Text='<%# Eval("title") %>' />
          <br />
-         description:
+         Description:
         <asp:Label ID="descriptionLabel" runat="server" 
              Text='<%# Eval("description") %>' />
         <br />
-         address:
+         Address:
         <asp:Label ID="addressLabel" runat="server" 
             Text='<%# Eval("address") %>' />
         <br />
-         city:
+         City:
         <asp:Label ID="cityLabel" runat="server" Text='<%# Eval("city") %>' />
         <br />
-         size:
+         Size:
         <asp:Label ID="sizeLabel" runat="server" Text='<%# Eval("size") %>' />
         <br />
-         price:
+         Price:
         <asp:Label ID="priceLabel" runat="server" Text='<%# Eval("price") %>' />
         <br />
         
-         negotiable:
+         Negotiable:
         <asp:Label ID="negotiableLabel" runat="server" 
              Text='<%# Eval("negotiable") %>' />
         <br />
@@ -96,11 +99,10 @@
              Text='<%# Eval("createDate") %>' />
         <br />
          
-        <asp:Image ID="imageLabel" runat="server" 
-            ImageUrl ='<%# Eval("image") %>' Width ="100px" Height="100px" />
-        <br />
+        
         <asp:LinkButton ID="LinkButton1" href='<%# Eval("id", "PropertyDtl.aspx?ID={0}") %>' runat="server" class="button primary  small">View Detail</asp:LinkButton>
         <asp:LinkButton ID="LinkButton2" href='<%# Eval("userid", "UserDtl.aspx?ID={0}") %>' runat="server" class="button small">Contact Detail</asp:LinkButton>
+        <asp:LinkButton ID="LinkButton3" href='<%# Eval("userid", "UserDtl.aspx?ID={0}") %>' runat="server" class="button small">Add Favorite</asp:LinkButton>
          <br />
     </ItemTemplate>
     <SelectedItemStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
@@ -108,7 +110,9 @@
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
                             ConnectionString="<%$ ConnectionStrings:ApplicationServices %>" 
                             
-                            SelectCommand="SELECT * FROM [PropertyMaster] WHERE ([propertysold] = @propertysold)">
+                            SelectCommand="SELECT *, (SELECT        TOP (1) images
+                               FROM            propertyImages
+                               WHERE        (id = propertyid)) AS images FROM [PropertyMaster] WHERE ([propertysold] = @propertysold)">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="N" Name="propertysold" Type="String" />
                             </SelectParameters>

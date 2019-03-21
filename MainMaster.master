@@ -19,6 +19,7 @@
 			<header id="header">
 				<a class="logo" href="Products.aspx">PG Finder</a>
 				<nav>
+                    <a href="#"><asp:Image ID="Image1" runat="server" Width="30" Height="30"></asp:Image></a>
                     <a href="login.aspx">Login</a>
 					<a href="UserReg.aspx">Register</a>
 					<a href="#menu">Menu</a>
