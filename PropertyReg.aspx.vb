@@ -11,6 +11,8 @@ Partial Class PropertyReg
         Dim neg As String
         Dim price As Decimal
         Dim aminities As String = ""
+        Dim foodtype As String = ""
+        Dim pgtype As String = ""
         price = TextBox6.Text
         If CheckBox1.Checked Then
             neg = "Y"
@@ -38,9 +40,24 @@ Partial Class PropertyReg
         If CheckBox9.Checked Then
             aminities = aminities + "FA,"
         End If
+        If CheckBox10.Checked Then
+            foodtype = foodtype + "veg,"
+        End If
+        If CheckBox11.Checked Then
+            foodtype = foodtype + "nonveg,"
+        End If
+        If CheckBox12.Checked Then
+            foodtype = foodtype + "eggetarian,"
+        End If
+        If CheckBox13.Checked Then
+            pgtype = pgtype + "bachelor,"
+        End If
+        If CheckBox14.Checked Then
+            pgtype = pgtype + "family,"
+        End If
         'Dim query As String = "insert into PropertyMaster values('" + getPropertyID() + "','" + TextBox1.Text + "','" + TextBox2.Text + "','" + TextBox3.Text + "','" + TextBox4.Text + "','" + TextBox5.Text + "'," + Integer.Parse(TextBox6.Text) + ",'" + DropDownList1.SelectedValue.ToString + "','" + neg + "','TestUser','" + Now.Date().Date.ToString + "','" + Session("imagepath").ToString + "','" + DropDownList2.SelectedValue.ToString + "')"
         ''" + getPropertyID() + "','" + TextBox1.Text + "','" + TextBox2.Text + "','" + TextBox3.Text + "','" + TextBox4.Text + "','" + TextBox5.Text + "','" + Integer.Parse(TextBox6.Text) + "','" + DropDownList1.SelectedValue.ToString + "','" + neg + "','TestUser','" + Now.Date().ToString + "','" + Session("imagepath").ToString + "','" + DropDownList2.SelectedValue.ToString + "'
-        Dim cmd As New SqlCommand("insert into PropertyMaster(id,title,description,address,size,price,city,negotiable,userid,createDate,type,amenities) values(" + TextBox8.Text + ",'" + TextBox1.Text + "','" + TextBox2.Text + "','" + TextBox3.Text + "','" + TextBox4.Text + "'," + price.ToString + ",'" + DropDownList1.SelectedValue.ToString + "','" + neg + "','" + Session("uid").ToString + "','" + Date.Now.ToString("MM-dd-yyyy") + "','" + DropDownList2.SelectedValue.ToString + "','" + aminities + "')", con)
+        Dim cmd As New SqlCommand("insert into PropertyMaster(id,title,description,address,size,price,city,negotiable,userid,createDate,type,amenities,foodtype,pgtype,pgallowed,state,pincode) values(" + TextBox8.Text + ",'" + TextBox1.Text + "','" + TextBox2.Text + "','" + TextBox3.Text + "','" + TextBox4.Text + "'," + price.ToString + ",'" + DropDownList1.SelectedValue.ToString + "','" + neg + "','" + Session("uid").ToString + "','" + Date.Now.ToString("MM-dd-yyyy") + "','" + DropDownList2.SelectedValue.ToString + "','" + aminities + "','" + foodtype + "','" + pgtype + "','" + TextBox9.Text + "','" + DropDownList3.SelectedValue + "','" + TextBox10.Text + "')", con)
         If cmd.ExecuteNonQuery() Then
             Dim cmd1 As New SqlCommand()
 
@@ -109,20 +126,35 @@ Partial Class PropertyReg
         If Not Session("uid") IsNot Nothing Then
             Response.Redirect("login.aspx")
         Else
-            TextBox8.Text = getPropertyID()
+            If Not Page.IsPostBack Then
+                TextBox8.Text = getPropertyID()
+                Dim cmd As New SqlCommand("select id from propertymaster where userid='" + Session("uid") + "'", con)
+                Dim da As New SqlDataAdapter()
+                da.SelectCommand = cmd
+                Dim ds As New Data.DataSet
+                da.Fill(ds)
+                DropDownList4.DataTextField = ds.Tables(0).Columns("id").ToString()
+                DropDownList4.DataValueField = ds.Tables(0).Columns("id").ToString()
+                DropDownList4.DataSource = ds.Tables(0)
+                DropDownList4.DataBind()
+                DropDownList4.Items.Insert(0, New ListItem("Select Property Id", "0"))
+            End If
+            
         End If
 
     End Sub
 
     Protected Sub Button3_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button3.Click
         Dim aminities As String
+        Dim foodtype As String
+        Dim pgtype As String
         con.Open()
-        Dim cmd As New SqlCommand("Select * from PropertyMaster where id=" + TextBox7.Text + "", con)
+        Dim cmd As New SqlCommand("Select * from PropertyMaster where id=" + DropDownList4.SelectedValue + "", con)
         Dim adp As New SqlDataAdapter()
         adp.SelectCommand = cmd
         Dim dt As New Data.DataTable()
         adp.Fill(dt)
-        Dim cmd1 As New SqlCommand("Select * from PropertyImages where propertyid=" + TextBox7.Text + "", con)
+        Dim cmd1 As New SqlCommand("Select * from PropertyImages where propertyid=" + DropDownList4.SelectedValue + "", con)
         Dim adp1 As New SqlDataAdapter()
         adp1.SelectCommand = cmd1
         Dim dt1 As New Data.DataTable()
@@ -136,6 +168,8 @@ Partial Class PropertyReg
             TextBox5.Text = dt.Rows(0)("size").ToString
             TextBox6.Text = dt.Rows(0)("price").ToString
             TextBox8.Text = dt.Rows(0)("id").ToString
+            TextBox9.Text = dt.Rows(0)("pgallowed").ToString
+            TextBox10.Text = dt.Rows(0)("pincode").ToString
             If dt.Rows(0)("negotiable").Equals("Y") Then
                 CheckBox1.Checked = True
             Else
@@ -148,13 +182,15 @@ Partial Class PropertyReg
             End If
             DropDownList1.SelectedValue = dt.Rows(0)("city").ToString
             DropDownList2.SelectedValue = dt.Rows(0)("type").ToString
+            DropDownList3.SelectedValue = dt.Rows(0)("state").ToString
             Image1.ImageUrl = dt1.Rows(0)("images").ToString
             Session("imagepath") = dt1.Rows(0)("images").ToString
             aminities = dt.Rows(0)("amenities").ToString
+            foodtype = dt.Rows(0)("foodtype").ToString
+            pgtype = dt.Rows(0)("pgtype").ToString
+
             Dim words As String() = aminities.Split(New Char() {","c})
-
             ' Use For Each loop over words and display them
-
             Dim word As String
             For Each word In words
                 If word.Contains("Lifts") Then
@@ -180,6 +216,30 @@ Partial Class PropertyReg
                 End If
                 Console.WriteLine(word)
             Next
+            Dim food As String() = foodtype.Split(New Char() {","c})
+            Dim f As String
+            For Each f In food
+                If f.Contains("veg") Then
+                    CheckBox10.Checked = True
+                End If
+                If f.Contains("nonveg") Then
+                    CheckBox11.Checked = True
+                End If
+                If f.Contains("eggetarian") Then
+                    CheckBox12.Checked = True
+                End If
+            Next
+            Dim pg As String() = pgtype.Split(New Char() {","c})
+            Dim p As String
+            For Each p In pg
+                If p.Contains("bachelor") Then
+                    CheckBox13.Checked = True
+                End If
+                If p.Contains("family") Then
+                    CheckBox14.Checked = True
+                End If
+                
+            Next
         Else
             ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", "Not Found")
         End If
@@ -189,24 +249,107 @@ Partial Class PropertyReg
     End Sub
 
     Protected Sub Button4_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button4.Click
-        con.Open()
-        Dim neg, sold As String
-        Dim price As Decimal
-        price = TextBox6.Text
-        If CheckBox1.Checked Then
-            neg = "Y"
-        Else
-            neg = "N"
-        End If
-        If CheckBox2.Checked Then
-            sold = "Y"
-        Else
-            sold = "N"
-        End If
-        Dim cmd As New SqlCommand("update PropertyMaster set title= '" + TextBox1.Text + "', description= '" + TextBox2.Text + "', address='" + TextBox3.Text + "', size = '" + TextBox4.Text + "', price=" + price.ToString + ", city='" + DropDownList1.SelectedValue.ToString + "', negotiable='" + neg + "', image='" + Session("imagepath").ToString + "', type='" + DropDownList2.SelectedValue.ToString + "' , propertysold='" + sold + "' where id=" + TextBox7.Text + "", con)
-        cmd.ExecuteNonQuery()
+        Try
+            con.Open()
+            Dim neg, sold As String
+            Dim price As Decimal
+            Dim aminities As String = ""
+            Dim foodtype As String = ""
+            Dim pgtype As String = ""
+            price = TextBox6.Text
+            If CheckBox1.Checked Then
+                neg = "Y"
+            Else
+                neg = "N"
+            End If
+            If CheckBox2.Checked Then
+                sold = "Y"
+            Else
+                sold = "N"
+            End If
+            If CheckBox3.Checked Then
+                aminities = aminities + "Lifts,"
+            End If
+            If CheckBox4.Checked Then
+                aminities = aminities + "Parks,"
+            End If
+            If CheckBox5.Checked Then
+                aminities = aminities + "VP,"
+            End If
+            If CheckBox6.Checked Then
+                aminities = aminities + "IN,"
+            End If
+            If CheckBox7.Checked Then
+                aminities = aminities + "WS,"
+            End If
+            If CheckBox8.Checked Then
+                aminities = aminities + "Security,"
+            End If
+            If CheckBox9.Checked Then
+                aminities = aminities + "FA,"
+            End If
+            If CheckBox10.Checked Then
+                foodtype = foodtype + "veg,"
+            End If
+            If CheckBox11.Checked Then
+                foodtype = foodtype + "nonveg,"
+            End If
+            If CheckBox12.Checked Then
+                foodtype = foodtype + "eggetarian,"
+            End If
+            If CheckBox13.Checked Then
+                pgtype = pgtype + "bachelor,"
+            End If
+            If CheckBox14.Checked Then
+                pgtype = pgtype + "family,"
+            End If
+            Dim cmd As New SqlCommand("update PropertyMaster set title= '" + TextBox1.Text + "', description= '" + TextBox2.Text + "', address='" + TextBox3.Text + "', size = '" + TextBox4.Text + "', price=" + price.ToString + ", city='" + DropDownList1.SelectedValue.ToString + "', negotiable='" + neg + "', type='" + DropDownList2.SelectedValue.ToString + "' , propertysold='" + sold + "',amenities='" + aminities + "',foodtype='" + foodtype + "',pgtype='" + pgtype + "',pgallowed='" + TextBox9.Text + "',state='" + DropDownList3.SelectedValue + "',pincode='" + TextBox10.Text + "' where id=" + DropDownList4.SelectedValue + "", con)
+            If cmd.ExecuteNonQuery() Then
+                MsgBox("Property update success")
+            Else
+                MsgBox("Property update fail")
+            End If
 
-        con.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+
+            con.Close()
+
+        End Try
+        
+
+    End Sub
+
+    Protected Sub Button2_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button2.Click
+        TextBox1.Text = ""
+        TextBox2.Text = ""
+        TextBox3.Text = ""
+        TextBox4.Text = ""
+        TextBox5.Text = ""
+        TextBox6.Text = ""
+        TextBox8.Text = getPropertyID()
+
+        TextBox9.Text = ""
+        TextBox10.Text = ""
+        CheckBox1.Checked = False
+        CheckBox2.Checked = False
+        CheckBox3.Checked = False
+        CheckBox4.Checked = False
+        CheckBox5.Checked = False
+        CheckBox6.Checked = False
+
+        CheckBox7.Checked = False
+        CheckBox8.Checked = False
+        CheckBox9.Checked = False
+        CheckBox10.Checked = False
+        CheckBox11.Checked = False
+        CheckBox12.Checked = False
+        CheckBox13.Checked = False
+        CheckBox14.Checked = False
+        DropDownList1.SelectedIndex = 0
+        DropDownList2.SelectedIndex = 0
+        DropDownList3.SelectedIndex = 0
 
     End Sub
 End Class

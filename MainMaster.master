@@ -13,13 +13,21 @@
         <link rel="stylesheet" type="text/css" href="Template/assets/datetime/jquery.datetimepicker.css"/>
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
+    <script language="javascript" type="text/javascript">
+        function logout() {
+        if (confirm('Are you sure want to logout?')){
+            WebSecurity.Logout();
+            Parse.User.logOut();
+            }
+        }
+    </script>
 </head>
 <body class="is-preload">
 <!-- Header -->
 			<header id="header">
 				<a class="logo" href="Products.aspx">PG Finder</a>
 				<nav>
-                    <a href="#"><asp:Image ID="Image1" runat="server" Width="30" Height="30"></asp:Image></a>
+                    <a href="#" onclick="logout();"><asp:Image ID="Image1" runat="server" Width="30" Height="30" ToolTip="Logout"></asp:Image></a>
                     <a href="login.aspx">Login</a>
 					<a href="UserReg.aspx">Register</a>
 					<a href="#menu">Menu</a>
@@ -32,6 +40,8 @@
 					<li><a href="Products.aspx">Home</a></li>
 					<li><a href="PropertyReg.aspx">Property Register</a></li>
 					<li><a href="UserReg.aspx">User Register</a></li>
+                    <li><a href="PGReport.aspx">Report</a></li>
+                    <li><a href="PropertyGraphs.aspx">Graphs</a></li>
 				</ul>
 			</nav>
     <form id="form1" runat="server">

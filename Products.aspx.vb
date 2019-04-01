@@ -23,6 +23,9 @@ Partial Class Products
         If DropDownList1.SelectedIndex > 0 Then
             cityCondition = "and city like '" + DropDownList1.SelectedValue + "%' "
         End If
+        If DropDownList4.SelectedIndex > 0 Then
+            cityCondition = "and state like '" + DropDownList4.SelectedValue + "%' "
+        End If
         If DropDownList3.SelectedIndex > 0 Then
             If DropDownList3.SelectedValue = "1000~5000" Then
                 priceCondition = "and price between 1000 and 5000 "
@@ -35,8 +38,8 @@ Partial Class Products
             End If
         End If
        
-        SqlDataSource1.SelectCommand = "select * from PropertyMaster WHERE propertysold = 'N' " + cityCondition + typeCondition + priceCondition
-
+        SqlDataSource1.SelectCommand = "select a.*,b.name, (SELECT   TOP (1) images FROM propertyImages WHERE a.id = propertyid) AS images from PropertyMaster a left join UserMaster b on a.userid=b.id WHERE propertysold = 'N' " + cityCondition + typeCondition + priceCondition
+        
         SqlDataSource1.DataBind()
         DataList1.DataBind()
 
@@ -46,6 +49,22 @@ Partial Class Products
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
+        If Not Page.IsPostBack Then
+            If Not Session("uid") Is Nothing Then
+                Label1.Visible = True
+                SqlDataSource2.SelectCommand = "select a.*,b.name, (SELECT   TOP (1) images FROM propertyImages WHERE a.id = propertyid) AS images from PropertyMaster a left join UserMaster b on a.userid=b.id WHERE propertysold = 'N' and a.id in (select pid from FavProperty where uid='" + Session("uid") + "') "
+
+                SqlDataSource2.DataBind()
+                DataList2.DataBind()
+            Else
+                Label1.Visible = False
+            End If
+
+            SqlDataSource3.SelectCommand = "select TOP (5) a.*,b.name, (SELECT   TOP (1) images FROM propertyImages WHERE a.id = propertyid) AS images from PropertyMaster a left join UserMaster b on a.userid=b.id WHERE propertysold = 'N' order by views desc "
+
+            SqlDataSource3.DataBind()
+            DataList3.DataBind()
+        End If
         'pg.DataSource = SqlDataSource1
         'pg.AllowPaging = True
         'pg.PageSize = 3

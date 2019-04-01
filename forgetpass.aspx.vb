@@ -19,6 +19,9 @@ Partial Class forgetpass
             message.Body = fullUrl
             smtpClient.EnableSsl = True
             smtpClient.Send(message)
+            Dim cmd2 As New SqlCommand("update usermaster set password='" + FormsAuthentication.HashPasswordForStoringInConfigFile("password", "md5") + "'", con)
+            cmd2.ExecuteNonQuery()
+
             MsgBox("Reset link sent on " + TextBox1.Text)
             Response.Redirect("login.aspx")
         Else

@@ -83,6 +83,7 @@
                             <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                             <RowStyle ForeColor="#000066" />
                         </asp:DetailsView>
+                        <asp:Button ID="Button2" runat="server" Text="Add Favorite" class="primary"></asp:Button>
                          <div id="fb-root"></div>
                         <asp:Label ID="Label3" runat="server" Text="Share to others: "></asp:Label>
                          <script language="javascript" type="text/javascript">

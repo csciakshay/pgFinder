@@ -51,4 +51,21 @@ Partial Class PropertyDtl
     Protected Sub Button1_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button1.Click
         Response.Redirect("Products.aspx")
     End Sub
+
+    Protected Sub Button2_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button2.Click
+        Try
+            con.Open()
+
+            Dim cmd As New SqlCommand("insert into FavProperty values('" + pid + "','" + Session("uid") + "')", con)
+            If cmd.ExecuteNonQuery Then
+                MsgBox("Property added as favourite")
+            Else
+                MsgBox("Add fail")
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            con.Close()
+        End Try
+    End Sub
 End Class

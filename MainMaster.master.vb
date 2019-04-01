@@ -11,5 +11,11 @@ Partial Class MainMaster
 
         End If
     End Sub
+    Public Sub logout()
+        MsgBox("logout call")
+        Session.Abandon()
+        Session.Clear()
+        Response.Redirect("login.aspx")
+    End Sub
 End Class
 
