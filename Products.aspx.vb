@@ -12,11 +12,11 @@ Partial Class Products
         'adp.Fill(dt)
         'DataList1.DataSource = dt
         'DataList1.DataBind()
-        Dim typeCondition, cityCondition, priceCondition As String
+        Dim typeCondition, cityCondition, priceCondition, stateCondition As String
         typeCondition = ""
         cityCondition = ""
         priceCondition = ""
-
+        stateCondition = ""
         If DropDownList2.SelectedIndex > 0 Then
             typeCondition = "and type like '" + DropDownList2.SelectedValue + "%' "
         End If
@@ -24,7 +24,7 @@ Partial Class Products
             cityCondition = "and city like '" + DropDownList1.SelectedValue + "%' "
         End If
         If DropDownList4.SelectedIndex > 0 Then
-            cityCondition = "and state like '" + DropDownList4.SelectedValue + "%' "
+            stateCondition = "and state like '" + DropDownList4.SelectedValue + "%' "
         End If
         If DropDownList3.SelectedIndex > 0 Then
             If DropDownList3.SelectedValue = "1000~5000" Then
@@ -38,7 +38,7 @@ Partial Class Products
             End If
         End If
        
-        SqlDataSource1.SelectCommand = "select a.*,b.name, (SELECT   TOP (1) images FROM propertyImages WHERE a.id = propertyid) AS images from PropertyMaster a left join UserMaster b on a.userid=b.id WHERE propertysold = 'N' " + cityCondition + typeCondition + priceCondition
+        SqlDataSource1.SelectCommand = "select a.*,b.name, (SELECT   TOP (1) images FROM propertyImages WHERE a.id = propertyid) AS images from PropertyMaster a left join UserMaster b on a.userid=b.id WHERE propertysold = 'N' " + cityCondition + typeCondition + priceCondition + stateCondition
         
         SqlDataSource1.DataBind()
         DataList1.DataBind()

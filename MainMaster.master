@@ -13,14 +13,16 @@
         <link rel="stylesheet" type="text/css" href="Template/assets/datetime/jquery.datetimepicker.css"/>
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
-    <script language="javascript" type="text/javascript">
+ 
+    <script type="text/javascript" >
         function logout() {
-        if (confirm('Are you sure want to logout?')){
-            WebSecurity.Logout();
-            Parse.User.logOut();
+            if (confirm('Are you sure want to logout?')) {
+                $.post("logout.aspx?action=logout", {}, function (data) {
+                    location.href = "logout.aspx";
+                });
             }
         }
-    </script>
+            </script>
 </head>
 <body class="is-preload">
 <!-- Header -->
@@ -40,8 +42,10 @@
 					<li><a href="Products.aspx">Home</a></li>
 					<li><a href="PropertyReg.aspx">Property Register</a></li>
 					<li><a href="UserReg.aspx">User Register</a></li>
+                     <%If (Session("role") = "admin") Then%>
                     <li><a href="PGReport.aspx">Report</a></li>
                     <li><a href="PropertyGraphs.aspx">Graphs</a></li>
+                     <%End If%>
 				</ul>
 			</nav>
     <form id="form1" runat="server">

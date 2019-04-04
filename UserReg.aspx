@@ -80,8 +80,8 @@
                      </div>
                      <div class="col-12">
                      Photoes <asp:FileUpload ID="FileUpload1" runat="server" accept="image/png image/jpeg image/gif"></asp:FileUpload>
-                     <asp:Button ID="Button2" runat="server" Text="Upload" class="primary"></asp:Button>
-                        <asp:Image ID="Image1" runat="server"></asp:Image>
+                     <asp:Button ID="Button2" runat="server" Text="Upload" class="primary" Visible="false"></asp:Button>
+                        <asp:Image ID="Image1" runat="server" Height="50" Width="50"></asp:Image>
                      </div>
                     <!-- Break -->
 											<div class="col-12">

@@ -30,6 +30,22 @@ Partial Class PropertyDtl
 
         Dim cmd2 As New SqlCommand("update PropertyMaster set views=" + getNoOfViews().ToString + " where id='" + pid + "'", con)
         cmd2.ExecuteNonQuery()
+
+        Dim cmd3 As New SqlCommand("select * from UserMaster where id='" + dt.Rows(0)("userid") + "'", con)
+        Dim adp2 As New SqlDataAdapter()
+        Dim dt2 As New Data.DataTable()
+        adp2.SelectCommand = cmd3
+        adp2.Fill(dt2)
+        
+
+        Dim fullUrl As String = "Hey " + dt2.Rows(0)("name").ToString + " your property " + dt.Rows(0)("title").ToString + " is viewed by " + Session("uname") + " and mailid is " + Session("email") + ""
+        Dim smtpClient As System.Net.Mail.SmtpClient = New System.Net.Mail.SmtpClient("smtp.gmail.com", 587)
+
+        Dim message As System.Net.Mail.MailMessage = New System.Net.Mail.MailMessage(Session("email"), dt2.Rows(0)("email").ToString, "PG Finder Property viewed", "")
+        message.IsBodyHtml = True
+        message.Body = fullUrl
+        smtpClient.EnableSsl = True
+        smtpClient.Send(message)
         con.Close()
 
     End Sub

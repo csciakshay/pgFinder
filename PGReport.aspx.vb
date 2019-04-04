@@ -24,8 +24,20 @@ Partial Class PGReport
         End Set
     End Property
     Private Sub BindGrid(Optional ByVal sortExpression As String = Nothing)
-
-        Using cmd As New SqlCommand("SELECT a.id,a.title,a.description,a.address,a.city,a.state,a.pincode,a.size,a.price,a.type,a.foodtype,a.pgtype,a.pgallowed,b.name FROM [propertyMaster] a left join usermaster b on a.userid=b.id WHERE ([propertysold] = 'N')", con)
+        Dim typeCondition, cityCondition, stateCondition As String
+        typeCondition = ""
+        cityCondition = ""
+        stateCondition = ""
+        If DropDownList2.SelectedIndex > 0 Then
+            typeCondition = "and type like '" + DropDownList2.SelectedValue + "%' "
+        End If
+        If DropDownList1.SelectedIndex > 0 Then
+            cityCondition = "and city like '" + DropDownList1.SelectedValue + "%' "
+        End If
+        If DropDownList4.SelectedIndex > 0 Then
+            stateCondition = "and state like '" + DropDownList4.SelectedValue + "%' "
+        End If
+        Using cmd As New SqlCommand("SELECT a.id,a.title,a.description,a.address,a.city,a.state,a.pincode,a.size,a.price,a.type,a.foodtype,a.pgtype,a.pgallowed,b.name FROM [propertyMaster] a left join usermaster b on a.userid=b.id WHERE ([propertysold] = 'N')" + cityCondition + typeCondition + stateCondition + "", con)
             Using sda As New SqlDataAdapter()
                 sda.SelectCommand = cmd
                 Using dt As New DataTable()
@@ -53,8 +65,20 @@ Partial Class PGReport
         Me.BindGrid()
     End Sub
     Protected Sub ExportExcel(ByVal sender As Object, ByVal e As EventArgs)
-
-        Using cmd As New SqlCommand("SELECT a.id,a.title,a.description,a.address,a.city,a.state,a.pincode,a.size,a.price,a.type,a.foodtype,a.pgtype,a.pgallowed,b.name FROM [propertyMaster] a left join usermaster b on a.userid=b.id WHERE ([propertysold] = 'N')")
+        Dim typeCondition, cityCondition, stateCondition As String
+        typeCondition = ""
+        cityCondition = ""
+        stateCondition = ""
+        If DropDownList2.SelectedIndex > 0 Then
+            typeCondition = "and type like '" + DropDownList2.SelectedValue + "%' "
+        End If
+        If DropDownList1.SelectedIndex > 0 Then
+            cityCondition = "and city like '" + DropDownList1.SelectedValue + "%' "
+        End If
+        If DropDownList4.SelectedIndex > 0 Then
+            stateCondition = "and state like '" + DropDownList4.SelectedValue + "%' "
+        End If
+        Using cmd As New SqlCommand("SELECT a.id,a.title,a.description,a.address,a.city,a.state,a.pincode,a.size,a.price,a.type,a.foodtype,a.pgtype,a.pgallowed,b.name FROM [propertyMaster] a left join usermaster b on a.userid=b.id WHERE ([propertysold] = 'N') " + cityCondition + typeCondition + stateCondition + "")
             Using sda As New SqlDataAdapter()
                 cmd.Connection = con
                 sda.SelectCommand = cmd
@@ -79,5 +103,9 @@ Partial Class PGReport
             End Using
         End Using
 
+    End Sub
+
+    Protected Sub Button2_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button2.Click
+       Me.BindGrid()
     End Sub
 End Class

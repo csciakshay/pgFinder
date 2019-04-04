@@ -22,16 +22,18 @@
 					<div class="content">
                      <h3>Property Details</h3>
                     <div class="row gtr-uniform">
-                     <div class="col-10 col-12-medium">
+                     <div class="col-8 col-12-medium">
                         
                     </div>
-                     <div class="col-2 col-12-medium">
+                     <div class="col-4 col-12-medium">
+                        <asp:Button ID="Button2" runat="server" Text="Add Favorite" class="primary"></asp:Button>
                         <asp:Button ID="Button1" runat="server" Text="Back" class="primary"></asp:Button>
                     </div>
                      <div class="col-2 col-12-medium">
                         
                     </div>
                     <div class="col-8 col-12-medium">
+                    
                      <asp:Label ID="Label1" runat="server" Text="Property images:"></asp:Label>
                     <asp:DataList ID="DataList1" runat="server" CellPadding="4" 
                              ForeColor="#333333" BorderColor="Aqua" 
@@ -83,9 +85,9 @@
                             <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
                             <RowStyle ForeColor="#000066" />
                         </asp:DetailsView>
-                        <asp:Button ID="Button2" runat="server" Text="Add Favorite" class="primary"></asp:Button>
+                        
                          <div id="fb-root"></div>
-                        <asp:Label ID="Label3" runat="server" Text="Share to others: "></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text="Share to others: " Font-Bold="true"></asp:Label>
                          <script language="javascript" type="text/javascript">
                              var pid = window.location.search;
                              pid = pid.replace("?", '');
