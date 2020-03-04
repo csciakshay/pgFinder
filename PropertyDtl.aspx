@@ -27,6 +27,7 @@
                     </div>
                      <div class="col-4 col-12-medium">
                         <asp:Button ID="Button2" runat="server" Text="Add Favorite" class="primary"></asp:Button>
+                        <asp:Button ID="Button3" runat="server" Text="Payment" class="primary"></asp:Button>
                         <asp:Button ID="Button1" runat="server" Text="Back" class="primary"></asp:Button>
                     </div>
                      <div class="col-2 col-12-medium">
